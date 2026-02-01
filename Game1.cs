@@ -11,16 +11,16 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-    private Texture2D _spaceStation;
-    private Texture2D _ship;
+    private Texture2D _Beans;
+    private Texture2D _kyurem;
     private string _message = "Hi. It's unseasonably warm these days.";
     private Color BGColor;
     private KeyboardState _kbPreviousState;
 
     Vector2 _PlayersInput;
 
-    //private SpriteFont _arial;
-    //private string _output = "This is the string I want to output";
+    private SpriteFont _arial;
+    private string _output = "Kyurem can move";
 
     private SimpleAnimation _walkingAnimation;
     private SimpleAnimation _walkingPartTwo;
@@ -48,10 +48,10 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         // TODO: use this.Content to load your game content here
-        _spaceStation = Content.Load<Texture2D>("Beans");
-        _ship = Content.Load<Texture2D>("Kyurem");
+        _Beans = Content.Load<Texture2D>("Beans");
+        _kyurem = Content.Load<Texture2D>("Kyurem");
 
-        //_arial = Content.Load<SpriteFont>("SystemArialFont");
+        _arial = Content.Load<SpriteFont>("SystemArialFont");
 
         _walkingAnimation = new SimpleAnimation(
             Content.Load<Texture2D>("Walkingnew"),
@@ -112,7 +112,7 @@ public class Game1 : Game
             _message += "Right ";
         }
         #endregion
-        ShipLocation+= _PlayersInput*10;
+        KyuremLocation+= _PlayersInput*10;
         #region space states
         if (_kbPreviousState.IsKeyUp(Keys.Space) && kbCurrentState.IsKeyDown(Keys.Space))
         {
@@ -157,19 +157,19 @@ public class Game1 : Game
 
         base.Update(gameTime);
     }
-    Vector2 ShipLocation =  new Vector2(300, 140);
+    Vector2 KyuremLocation =  new Vector2(300, 140);
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         // TODO: Add your drawing code here
         _spriteBatch.Begin();
-        _spriteBatch.Draw(_spaceStation, Vector2.Zero, Color.White);
+        _spriteBatch.Draw(_Beans, Vector2.One, Color.White);
         // static sprite
-        _spriteBatch.Draw(_ship,ShipLocation, Color.White);
+        _spriteBatch.Draw(_kyurem,KyuremLocation, Color.White);
 
         // text
-        //_spriteBatch.DrawString(_arial, _output, new Vector2(20, 20), Color.White);
+        _spriteBatch.DrawString(_arial, _output, new Vector2(230, 250), Color.DarkRed);
 
         // animation
         _walkingAnimation.Draw(_spriteBatch, new Vector2(100, 200), SpriteEffects.None);

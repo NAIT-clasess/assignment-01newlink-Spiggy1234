@@ -49,6 +49,13 @@
 /processorParam:TextureFormat=Color
 /build:kyurem.png
 
+#begin SystemArialFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:SystemArialFont.spritefont
+
 #begin Walkingnew.png
 /importer:TextureImporter
 /processor:TextureProcessor
