@@ -41,17 +41,17 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         // TODO: use this.Content to load your game content here
-        _spaceStation = Content.Load<Texture2D>("Station");
-        _ship = Content.Load<Texture2D>("Beetle");
+        _spaceStation = Content.Load<Texture2D>("Beans");
+        _ship = Content.Load<Texture2D>("Kyurem");
 
         //_arial = Content.Load<SpriteFont>("SystemArialFont");
 
         _walkingAnimation = new SimpleAnimation(
-            Content.Load<Texture2D>("Walking"),
+            Content.Load<Texture2D>("Walkingnew"),
             81,
-            144,
-            8,
-            8
+            100,
+            4,
+            6
         );
     }
 
