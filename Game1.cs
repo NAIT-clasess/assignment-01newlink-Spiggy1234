@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Linq.Expressions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -13,7 +14,8 @@ public class Game1 : Game
 
     private Texture2D _Beans;
     private Texture2D _kyurem;
-    private string _message = "Hi. It's unseasonably warm these days.";
+    private Texture2D _latias;
+    private string _message = "Kyurem Gaming";
     private Color BGColor;
     private KeyboardState _kbPreviousState;
 
@@ -25,6 +27,11 @@ public class Game1 : Game
     private SimpleAnimation _walkingAnimation;
     private SimpleAnimation _walkingPartTwo;
 
+    // Moving
+    private Vector2 _position;
+    private Vector2 _dimensions;
+
+    private float _speed;
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -38,7 +45,13 @@ public class Game1 : Game
         _graphics.PreferredBackBufferWidth = 640;
         _graphics.PreferredBackBufferHeight = 320;
         _graphics.ApplyChanges();
-        // Changes the size of the game window/Running project window 
+        // Changes the size of the game window/Running project window
+
+        // Moving
+        _position = new Vector2(60f, 80f);
+        _dimensions = new Vector2(100f, 100f);
+
+        _speed = 1f;
 
         base.Initialize();
     }
@@ -48,8 +61,9 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         // TODO: use this.Content to load your game content here
-        _Beans = Content.Load<Texture2D>("Beans");
+        _Beans = Content.Load<Texture2D>("Giant_Chasm_Cave");
         _kyurem = Content.Load<Texture2D>("Kyurem");
+        _latias = Content.Load<Texture2D>("latias");
 
         _arial = Content.Load<SpriteFont>("SystemArialFont");
 
@@ -68,6 +82,13 @@ public class Game1 : Game
             5,
             10
         );
+
+        // Moving
+        //_spriteBatch = new SpriteBatch(GraphicsDevice);
+
+        //_pixel = new Texture2D(GraphicsDevice, 1, 1);
+        //_pixel.SetData(new[] { Color.White });
+
     }
 
     protected override void Update(GameTime gameTime)
@@ -155,6 +176,7 @@ public class Game1 : Game
         BGColor= Color.Green;
         }
 
+        Move(gameTime);
         base.Update(gameTime);
     }
     Vector2 KyuremLocation =  new Vector2(300, 140);
@@ -164,9 +186,12 @@ public class Game1 : Game
 
         // TODO: Add your drawing code here
         _spriteBatch.Begin();
-        _spriteBatch.Draw(_Beans, Vector2.One, Color.White);
+        Rectangle screenRectangle = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+        _spriteBatch.Draw(_Beans, screenRectangle, Color.White);
         // static sprite
         _spriteBatch.Draw(_kyurem,KyuremLocation, Color.White);
+
+        //_spriteBatch.Draw(_latias, new Vector2(150, 150), Color.White);
 
         // text
         _spriteBatch.DrawString(_arial, _output, new Vector2(230, 250), Color.DarkRed);
@@ -176,9 +201,30 @@ public class Game1 : Game
 
         _walkingPartTwo.Draw(_spriteBatch, new Vector2(385, 100), SpriteEffects.None);
 
+
+        // Moving
+
+        Rectangle rect = new Rectangle(
+            (int)_position.X,
+            (int)_position.Y,
+            (int)_dimensions.Y,
+            (int)_dimensions.X
+        );
+
+        _spriteBatch.Draw(_latias, rect, Color.White);
+
         _spriteBatch.End();
 
         base.Draw(gameTime);
+
+    }
+
+    private void Move(GameTime gameTime)
+    {
+        float seconds = (float)gameTime.TotalGameTime.TotalSeconds;
+        _position.X += _speed * seconds;
+
+        base.Update(gameTime);
 
     }
 }
